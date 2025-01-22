@@ -2,10 +2,15 @@
  
 import * as React from 'react';
 import { useEdgeStore } from '@/lib/edgestore';
- 
+ import { useState } from "react";
+
 export default function Page() {
   const [file, setFile] = React.useState<File>();
   const { edgestore } = useEdgeStore();
+
+  const [urls, setUrls] = useState<
+    string  | undefined
+  >();
  
   return (
     <div>
@@ -28,11 +33,20 @@ export default function Page() {
             // you can run some server action or api here
             // to add the necessary data to your database
             console.log(res);
+
+            setUrls(
+                res.url
+              );
           }
         }}
       >
         Upload
       </button>
+        <div>
+            {urls ? (
+            <img src={urls} alt="uploaded image" />
+            ) : null}
+        </div>
     </div>
   );
 }
